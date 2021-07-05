@@ -147,7 +147,7 @@ def pull_last_24h_influx():
     user = 'bme280monitor'
     password = 'Subaru15'
     dbname = 'bme280'
-    query = 'SELECT temperature, host, time FROM "bme280" WHERE time > now() - 1d  GROUP BY host;'
+    query = 'SELECT temperature, host, time FROM "bme280" WHERE time > now() - 24h  GROUP BY host;'
     temperatures = []
     host_names = []
     time_list = []
