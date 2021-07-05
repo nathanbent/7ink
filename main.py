@@ -293,6 +293,7 @@ while running is True:
         server_closet_time_list = list_c
         living_room_time_list = list_d
 
+
         plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
         plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, linestyle='dashed',
                  marker='.')
