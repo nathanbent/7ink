@@ -237,12 +237,12 @@ while running is True:
         server_closet_min_temp = min(server_closet_temp_list)
 
         living_list_length = enumerate(living_list)
-        N = 1000 # Max events for graph (288 is number of 5 minute increments for 24h)
-
-        server_closet_temp_list = server_closet_temp_list[-N:]
-        server_closet_time_list = server_closet_time_list[-N:]
-        living_room_temp_list = living_room_temp_list[-N:]
-        living_room_time_list = living_room_time_list[-N:]
+        # N = 1000 # Max events for graph (288 is number of 5 minute increments for 24h)
+        #
+        # server_closet_temp_list = server_closet_temp_list[-N:]
+        # server_closet_time_list = server_closet_time_list[-N:]
+        # living_room_temp_list = living_room_temp_list[-N:]
+        # living_room_time_list = living_room_time_list[-N:]
 
         draw_TextImage_Black.text(((epd.height * 0.0), min_max_display_offset),
                                   str(round(server_closet_max_temp, 2)) + Prefs.degree_sign + " F", font=medium_font,
@@ -271,8 +271,7 @@ while running is True:
                                   fill=0)  # 1st server temperature
 
 
-        print(len(server_closet_temp_list), len(living_room_temp_list))
-        print(len(server_closet_time_list), len(living_room_time_list))
+
 
         list_a = server_closet_temp_list
         list_b = living_room_temp_list
@@ -293,6 +292,9 @@ while running is True:
         server_closet_time_list = list_c
         living_room_time_list = list_d
 
+
+        print(len(server_closet_temp_list), len(living_room_temp_list))
+        print(len(server_closet_time_list), len(living_room_time_list))
 
         plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
         plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, linestyle='dashed',
