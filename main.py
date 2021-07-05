@@ -237,7 +237,7 @@ while running is True:
         server_closet_min_temp = min(server_closet_temp_list)
 
         living_list_length = enumerate(living_list)
-        N = 275 # Max events for graph (288 is number of 5 minute increments for 24h)
+        N = 1000 # Max events for graph (288 is number of 5 minute increments for 24h)
 
         server_closet_temp_list = server_closet_temp_list[-N:]
         server_closet_time_list = server_closet_time_list[-N:]
