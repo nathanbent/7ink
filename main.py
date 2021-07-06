@@ -115,32 +115,32 @@ def influx_import():  # Import and break down the information from our influxDB
         if name == 'RetroPie' or 'Living Room':
             host_names_24h[n] = 'Living Room'
             # print(room_temps[n])
-            if time_list[n] not in living_room_time_list:  # Only add to the list if not already there
-                living_room_temp_list.append(room_temps[n])
-                living_room_time_list.append(time_list[n])
+            if time_list_24h[n] not in living_room_time_list:  # Only add to the list if not already there
+                living_room_temp_list.append(room_temps_24h[n])
+                living_room_time_list.append(time_list_24h[n])
         elif name == 'RaspiTest' or 'Server Closet':
             host_names_24h[n] = 'Server Closet'
-            if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
-                server_closet_temp_list.append(room_temps[n])
-                server_closet_time_list.append(time_list[n])
+            if time_list_24h[n] not in server_closet_time_list:  # Only add to the list if not already there
+                server_closet_temp_list.append(room_temps_24h[n])
+                server_closet_time_list.append(time_list_24h[n])
             # print(room_temps[n])
         elif name == 'RaspiZeroW' or "Daniel's Room":
             host_names_24h[n] = "Daniel's Room"
-            if time_list[n] not in daniels_room_time_list:  # Only add to the list if not already there
-                daniels_room_temp_list.append(room_temps[n])
-                daniels_room_time_list.append(time_list[n])
+            if time_list_24h[n] not in daniels_room_time_list:  # Only add to the list if not already there
+                daniels_room_temp_list.append(room_temps_24h[n])
+                daniels_room_time_list.append(time_list_24h[n])
             # print(room_temps[n])
         elif name == "Nates Room" or "Nate's Room":
             host_names_24h[n] = "Nate's Room"
-            if time_list[n] not in nates_room_time_list:  # Only add to the list if not already there
-                nates_room_temp_list.append(room_temps[n])
-                nates_room_time_list.append(time_list[n])
+            if time_list_24h[n] not in nates_room_time_list:  # Only add to the list if not already there
+                nates_room_temp_list.append(room_temps_24h[n])
+                nates_room_time_list.append(time_list_24h[n])
             # print(room_temps[n])
         elif name == "RaspiMain" or 'Server Rack':
             host_names_24h[n] = "Server Rack"
-            if time_list[n] not in server_rack_time_list:  # Only add to the list if not already there
-                server_rack_temp_list.append(room_temps[n])
-                server_rack_time_list.append(time_list[n])
+            if time_list_24h[n] not in server_rack_time_list:  # Only add to the list if not already there
+                server_rack_temp_list.append(room_temps_24h[n])
+                server_rack_time_list.append(time_list_24h[n])
             # print(room_temps[n])
         else:
             print("the hostname " + host_names_24h[n] + " wasn't recognized")
