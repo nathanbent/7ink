@@ -90,7 +90,7 @@ def influx_import():
     global room_temps
     global time_list
 
-    host_names, room_temps, time_list = pull_last_24h_influx()
+    host_names, room_temps, time_list = influx_rtpull_last_24h_influx()
     list_points = 0
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
