@@ -38,7 +38,6 @@ daniels_room_time_list = []
 nates_room_temp_list = []
 nates_room_time_list = []
 
-
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
@@ -57,7 +56,6 @@ credentials = ['host_name', '10.0.0.12', 8086, 'bme280monitor', 'Subaru15', 'bme
 Display_total_width = 528  # In portrait mode
 Display_total_height = 880  # In portrait mode
 
-
 # Spacing stuff
 date_display_offset = 0
 current_weather_offset = 85
@@ -75,7 +73,8 @@ living_room_24h = []
 server_closet_temps = []
 
 
-def influx_import():
+def influx_import():  # Import and break down the information from our influxDB
+    # Lots of global variables to import, there should be a better way to do this
     global living_room_temp_list
     global server_closet_temp_list
     global living_room_time_list
@@ -90,7 +89,7 @@ def influx_import():
     global room_temps
     global time_list
 
-    host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()
+    host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
     list_points = 0
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
@@ -98,12 +97,12 @@ def influx_import():
             host_names[n] = 'Living Room'
             list_points = list_points + 1
             # print(room_temps[n])
-            if time_list[n] not in living_room_time_list:
+            if time_list[n] not in living_room_time_list:  # Only add to the list if not already there
                 living_room_temp_list.append(room_temps[n])
                 living_room_time_list.append(time_list[n])
         elif name == 'RaspiTest':
             host_names[n] = 'Server Closet'
-            if time_list[n] not in server_closet_time_list:
+            if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
                 server_closet_temp_list.append(room_temps[n])
                 server_closet_time_list.append(time_list[n])
             list_points = list_points + 1
@@ -111,26 +110,27 @@ def influx_import():
         elif name == 'RaspiZeroW':
             host_names[n] = "Daniel's Room"
             list_points = list_points + 1
-            if time_list[n] not in daniels_room_time_list:
+            if time_list[n] not in daniels_room_time_list:  # Only add to the list if not already there
                 daniels_room_temp_list.append(room_temps[n])
                 daniels_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "Nates Room":
             host_names[n] = "Nate's Room"
             list_points = list_points + 1
-            if time_list[n] not in nates_room_time_list:
+            if time_list[n] not in nates_room_time_list:  # Only add to the list if not already there
                 nates_room_temp_list.append(room_temps[n])
                 nates_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "RaspiMain":
             host_names[n] = "Server Rack"
             list_points = list_points + 1
-            if time_list[n] not in server_closet_time_list:
+            if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
                 server_rack_temp_list.append(room_temps[n])
                 server_rack_time_list.append(time_list[n])
             # print(room_temps[n])
         else:
             print("the hostname " + host_names[n] + " wasn't recognized")
+
 
 def plot_graph():
     global living_room_temp_list
@@ -144,27 +144,27 @@ def plot_graph():
     global nates_room_temp_list
     global nates_room_time_list
 
-    list_a = server_closet_temp_list
-    list_b = living_room_temp_list
-    list_c = server_closet_time_list
-    list_d = living_room_time_list
+    list_a = server_closet_temp_list  # Make the lists the same length
+    list_b = living_room_temp_list  # Make the lists the same length
+    list_c = server_closet_time_list  # Make the lists the same length
+    list_d = living_room_time_list  # Make the lists the same length
 
-    if len(list_a) < len(list_b):
-        list_b = list_b[: len(list_a)]
-    elif len(list_a) > len(list_b):
-        list_a = list_a[: len(list_b)]
-    if len(list_c) < len(list_d):
-        list_d = list_d[: len(list_c)]
-    elif len(list_c) > len(list_d):
-        list_c = list_c[: len(list_d)]
+    if len(list_a) < len(list_b):  # Compare length of lists
+        list_b = list_b[: len(list_a)]  # Compare length of lists
+    elif len(list_a) > len(list_b):  # Compare length of lists
+        list_a = list_a[: len(list_b)]  # Compare length of lists
+    if len(list_c) < len(list_d):  # Compare length of lists
+        list_d = list_d[: len(list_c)]  # Compare length of lists
+    elif len(list_c) > len(list_d):  # Compare length of lists
+        list_c = list_c[: len(list_d)]  # Compare length of lists
 
-    server_closet_temp_list = list_a
-    living_room_temp_list = list_b
-    server_closet_time_list = list_c
-    living_room_time_list = list_d
+    server_closet_temp_list = list_a  # Make the lists the same length
+    living_room_temp_list = list_b  # Make the lists the same length
+    server_closet_time_list = list_c  # Make the lists the same length
+    living_room_time_list = list_d  # Make the lists the same length
 
-    print(len(server_closet_temp_list), len(living_room_temp_list))
-    print(len(server_closet_time_list), len(living_room_time_list))
+    print(len(server_closet_temp_list), len(living_room_temp_list))  # Show us the list lengths
+    print(len(server_closet_time_list), len(living_room_time_list))  # Show us the list lengths
 
     plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
     plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, linestyle='dashed',
@@ -178,38 +178,30 @@ def plot_graph():
     plt.savefig('closet_temps.png')
 
 
-
 while running is True:
 
     try:
         epd = epd7in5_HD.EPD()
-        display_width = 528
-        display_height = 880
+        display_width = 528  # This eInk is 528 pixels wide in Portrait mode
+        display_height = 880  # This eInk is 880 pixels tall in Portrait mode
 
         # Vertical draw
         Black_Layer = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         Red_Layer = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         NoImageLayer = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         draw_TextImage_Black = ImageDraw.Draw(Black_Layer)  # White box
-        last_message, message_time, message_host = influx_rt.pull_last_message()
         draw_TextImage_Red = ImageDraw.Draw(Red_Layer)  # White box
-
-        server_temp_host_names, room_temps, room_humidities = influx_rt.pull_last_influx()
-
-
-        public_ip_host_names, public_ip_addresses = influx_rt.pull_last_public_ip()
-
-
         # Time text
         now = datetime.now()  # Load the current time to show on display
         date_text = now.strftime("%A, %B, %d")  # The date text
-
         # All the temperature and name stuff below
-        draw_TextImage_Black.text(screen_update_text_location, "Screen updated on " + date_text + " at " + str(now.strftime("%I:%M %p")),
-                                  font=really_small_font, fill=0)  #
-
+        draw_TextImage_Black.text(screen_update_text_location,
+                                  "Screen updated on " + date_text + " at " + str(now.strftime("%I:%M %p")),
+                                  font=really_small_font, fill=0)  # Screen updated section
+        # Influx internet info import
+        server_temp_host_names, room_temps, room_humidities = influx_rt.pull_last_influx()  # Pulls the most recent
+        public_ip_host_names, public_ip_addresses = influx_rt.pull_last_public_ip()  # Pulls the IP info
         internet_speed_hostnames, download_speeds, upload_speeds, pings, internet_speed_update_time = influx_rt.pull_last_internet_speeds()
-
         for n, name in enumerate(internet_speed_hostnames):  # Change names into what I want to call them
             if name == 'UbuntuMain':
                 ubuntu_main_download_speed = download_speeds[n]
@@ -221,12 +213,14 @@ while running is True:
                 ubuntu_private_ping = pings[n]
             else:
                 print("the hostname " + internet_speed_hostnames[n] + " wasn't recognized")
-
+        # MESSAGE SECTION
+        last_message, message_time, message_host = influx_rt.pull_last_message()  # Import the last message and info
         message_display_text = last_message
 
-        draw_TextImage_Black.text((message_display_offset), str(message_display_text) + " from " + str(message_host) + " at ", font=Prefs.medium_font,
-                fill=0)
-
+        draw_TextImage_Black.text((message_display_offset),
+                                  str(message_display_text), font=Prefs.small_font, fill=0)
+        draw_TextImage_Black.text((message_display_offset + (0, 50)),
+                                  str(" from " + message_host + " at " + message_time), font=Prefs.medium_font, fill=0)
 
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset), str(ubuntu_main_download_speed),
                                   font=small_font, fill=0)  #
@@ -253,8 +247,6 @@ while running is True:
         draw_TextImage_Black.text((epd.height * .90, internet_speed_offset + 15), "ping",
                                   font=really_small_font, fill=0)  #
 
-
-
         for n, name in enumerate(public_ip_host_names):  # Change names into what I want to call them
             if name == 'UbuntuMain':
                 ubuntu_main_public_ip = public_ip_addresses[n]
@@ -274,7 +266,6 @@ while running is True:
         draw_TextImage_Black.text((epd.height * .6, public_ip_height_offset - 30), "Ubuntu Secure",
                                   font=medium_font, fill=0)  #
 
-
         influx_import()
         plot_graph()
 
@@ -284,18 +275,16 @@ while running is True:
         draw_TextImage_Black.line((0, 20, epd.width, 20), fill=0)  # Line below times
         draw_TextImage_Black.line((0, 600, epd.width, 600), fill=0)  # Line below times
 
-
         list_points = 0
 
-
-
-        for n in range (0, server_temp_list_length):
+        for n in range(0, server_temp_list_length):
             print(n)
-            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), server_temps_display_offset), server_temp_host_names[n],
-                                  font=really_small_font, fill=0)  #
-            draw_TextImage_Black.text(((epd.height * (n *divider_distance)), (server_temps_display_offset - 30)),
-                                  str(round((room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
-                                  fill=0)  # 1st server temperature
+            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), server_temps_display_offset),
+                                      server_temp_host_names[n],
+                                      font=really_small_font, fill=0)  #
+            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
+                                      str(round((room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
+                                      fill=0)  # 1st server temperature
         # print(room_temps)
         # print(host_names)
 
@@ -330,8 +319,6 @@ while running is True:
         draw_TextImage_Black.text(((epd.height * .33), (min_max_display_offset - 25)), "24 Hour Temps",
                                   font=medium_font,
                                   fill=0)  # 1st server temperature
-
-
 
         server_closet_graph_image = Image.open('closet_temps.png')  # Load the graph for display
         newsize = (600, 200)  # Resize the graph to better fit the screen
