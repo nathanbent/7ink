@@ -124,7 +124,7 @@ def influx_import():  # Import and break down the information from our influxDB
         elif name == "RaspiMain":
             host_names[n] = "Server Rack"
             list_points = list_points + 1
-            if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
+            if time_list[n] not in server_rack_time_list:  # Only add to the list if not already there
                 server_rack_temp_list.append(room_temps[n])
                 server_rack_time_list.append(time_list[n])
             # print(room_temps[n])
@@ -219,8 +219,8 @@ while running is True:
 
         draw_TextImage_Black.text((message_display_offset),
                                   str(message_display_text), font=Prefs.small_font, fill=0)
-        draw_TextImage_Black.text((message_display_offset + (0, 50)),
-                                  str(" from " + message_host + " at " + message_time), font=Prefs.medium_font, fill=0)
+        draw_TextImage_Black.text((message_display_offset + (0, 100)),
+                                  str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)
 
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset), str(ubuntu_main_download_speed),
                                   font=small_font, fill=0)  #
@@ -280,7 +280,7 @@ while running is True:
         for n in range(0, server_temp_list_length):
             print(n)
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), server_temps_display_offset),
-                                      server_temp_host_names[n],
+                                      host_names[n],
                                       font=really_small_font, fill=0)  #
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
                                       str(round((room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
