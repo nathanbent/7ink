@@ -24,9 +24,9 @@ import matplotlib.pyplot as plt
 
 sleep_time = 60
 
-24h_host_names = []
-24h_room_temps = []
-24h_time_list = []
+host_names_24h = []
+room_temps_24h = []
+time_list-24h = []
 last_time_list = []
 last-host_names = []
 last_room_temps = []
@@ -105,27 +105,27 @@ def influx_import():  # Import and break down the information from our influxDB
     global daniels_room_time_list
     global nates_room_temp_list
     global nates_room_time_list
-    global 24h_host_names
-    global 24h_room_temps
-    global 24h_time_list
+    global host_names_24h
+    global room_temps_24h
+    global time_list-24h
 
-    24h_host_names, 24h_room_temps, 24h_time_list = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
+    host_names_24h, room_temps_24h, time_list-24h = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
         if name == 'RetroPie' or 'Living Room':
-            24h_host_names[n] = 'Living Room'
+            host_names_24h[n] = 'Living Room'
             # print(room_temps[n])
             if time_list[n] not in living_room_time_list:  # Only add to the list if not already there
                 living_room_temp_list.append(room_temps[n])
                 living_room_time_list.append(time_list[n])
         elif name == 'RaspiTest' or 'Server Closet':
-            24h_host_names[n] = 'Server Closet'
+            host_names_24h[n] = 'Server Closet'
             if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
                 server_closet_temp_list.append(room_temps[n])
                 server_closet_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == 'RaspiZeroW' or "Daniel's Room":
-            24h_host_names[n] = "Daniel's Room"
+            host_names_24h[n] = "Daniel's Room"
             if time_list[n] not in daniels_room_time_list:  # Only add to the list if not already there
                 daniels_room_temp_list.append(room_temps[n])
                 daniels_room_time_list.append(time_list[n])
@@ -137,13 +137,13 @@ def influx_import():  # Import and break down the information from our influxDB
                 nates_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "RaspiMain" or 'Server Rack':
-            24h_host_names[n] = "Server Rack"
+            host_names_24h[n] = "Server Rack"
             if time_list[n] not in server_rack_time_list:  # Only add to the list if not already there
                 server_rack_temp_list.append(room_temps[n])
                 server_rack_time_list.append(time_list[n])
             # print(room_temps[n])
         else:
-            print("the hostname " + 24h_host_names[n] + " wasn't recognized")
+            print("the hostname " + host_names_24h[n] + " wasn't recognized")
 
 
 def plot_graph():
