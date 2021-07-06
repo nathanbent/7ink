@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
 #  V .01 - Figured out how to drive display, add date, temperatures
-
+#  V .1 - Lots of updates
 
 #  Want To Do
 #  Better InfluxDB
-#  Google Calendar integration
 #  Day of week stuff to do
 # Graphing
 
@@ -75,13 +74,109 @@ message_display_offset = (15, 100)
 living_room_24h = []
 server_closet_temps = []
 
+
+def influx_import():
+    global living_room_temp_list
+    global server_closet_temp_list
+    global living_room_time_list
+    global server_closet_time_list
+    global server_rack_temp_list
+    global server_rack_time_list
+    global daniels_room_temp_list
+    global daniels_room_time_list
+    global nates_room_temp_list
+    global nates_room_time_list
+
+    host_names, room_temps, time_list = pull_last_24h_influx()
+    list_points = 0
+
+
+    for n, name in enumerate(host_names):  # Change names into what I want to call them
+        if name == 'RetroPie':
+            host_names[n] = 'Living Room'
+            list_points = list_points + 1
+            # print(room_temps[n])
+            living_room_temp_list.append(room_temps[n])
+            living_room_time_list.append(time_list[n])
+        elif name == 'RaspiTest':
+            host_names[n] = 'Server Closet'
+            server_closet_temp_list.append(room_temps[n])
+            server_closet_time_list.append(time_list[n])
+            list_points = list_points + 1
+            # print(room_temps[n])
+        elif name == 'RaspiZeroW':
+            host_names[n] = "Daniel's Room"
+            list_points = list_points + 1
+            daniels_room_temp_list.append(room_temps[n])
+            daniels_room_time_list.append(time_list[n])
+            # print(room_temps[n])
+        elif name == "Nates Room":
+            host_names[n] = "Nate's Room"
+            list_points = list_points + 1
+            nates_room_temp_list.append(room_temps[n])
+            nates_room_time_list.append(time_list[n])
+            # print(room_temps[n])
+        elif name == "RaspiMain":
+            host_names[n] = "Server Rack"
+            list_points = list_points + 1
+            server_rack_temp_list.append(room_temps[n])
+            server_rack_time_list.append(time_list[n])
+            # print(room_temps[n])
+        else:
+            print("the hostname " + host_names[n] + " wasn't recognized")
+
+def plot_graph():
+    global living_room_temp_list
+    global server_closet_temp_list
+    global living_room_time_list
+    global server_closet_time_list
+    global server_rack_temp_list
+    global server_rack_time_list
+    global daniels_room_temp_list
+    global daniels_room_time_list
+    global nates_room_temp_list
+    global nates_room_time_list
+
+    list_a = server_closet_temp_list
+    list_b = living_room_temp_list
+    list_c = server_closet_time_list
+    list_d = living_room_time_list
+
+    if len(list_a) < len(list_b):
+        list_b = list_b[: len(list_a)]
+    elif len(list_a) > len(list_b):
+        list_a = list_a[: len(list_b)]
+    if len(list_c) < len(list_d):
+        list_d = list_d[: len(list_c)]
+    elif len(list_c) > len(list_d):
+        list_c = list_c[: len(list_d)]
+
+    server_closet_temp_list = list_a
+    living_room_temp_list = list_b
+    server_closet_time_list = list_c
+    living_room_time_list = list_d
+
+    print(len(server_closet_temp_list), len(living_room_temp_list))
+    print(len(server_closet_time_list), len(living_room_time_list))
+
+    plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
+    plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, linestyle='dashed',
+             marker='.')
+
+    frame1 = plt.gca()
+    frame1.axes.get_xaxis().set_visible(False)
+    frame1.axes.get_yaxis().set_visible(False)
+    plt.show()
+    # function to show the plot
+    plt.savefig('closet_temps.png')
+
+
+
 while running is True:
     try:
         epd = epd7in5_HD.EPD()
         display_width = 528
-
-        print("EPD HEIGHT " + str(epd.height))
-        print("EPD WIDTH " + str(epd.width))
+        display_height = 880
 
         # Vertical draw
         Black_Layer = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
@@ -172,25 +267,8 @@ while running is True:
                                   font=medium_font, fill=0)  #
 
 
-
-        for n, name in enumerate(server_temp_host_names):  # Change names into what I want to call them
-
-            if name == 'RetroPie':
-                server_temp_host_names[n] = 'Living Room'
-            elif name == 'RaspiTest':
-                server_temp_host_names[n] = 'Server Closet'
-            elif name == 'RaspiZeroW':
-                server_temp_host_names[n] = "Daniel's Room"
-                # print(room_temps[n])
-            elif name == "Nates Room":
-                server_temp_host_names[n] = "Nate's Room"
-                # print(room_temps[n])
-            elif name == "RaspiMain":
-                server_temp_host_names[n] = "Server Rack"
-                # print(room_temps[n])
-            else:
-                print("the hostname " + server_temp_host_names[n] + " wasn't recognized")
-
+        influx_import()
+        plot_graph()
 
         server_temp_list_length = len(server_temp_host_names)
         divider_distance = 1.0 / server_temp_list_length
@@ -202,39 +280,6 @@ while running is True:
         host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()
         list_points = 0
 
-        for n, name in enumerate(host_names):  # Change names into what I want to call them
-            if name == 'RetroPie':
-                host_names[n] = 'Living Room'
-                list_points = list_points + 1
-                # print(room_temps[n])
-                living_room_temp_list.append(room_temps[n])
-                living_room_time_list.append(time_list[n])
-            elif name == 'RaspiTest':
-                host_names[n] = 'Server Closet'
-                server_closet_temp_list.append(room_temps[n])
-                server_closet_time_list.append(time_list[n])
-                list_points = list_points + 1
-                # print(room_temps[n])
-            elif name == 'RaspiZeroW':
-                host_names[n] = "Daniel's Room"
-                list_points = list_points + 1
-                daniels_room_temp_list.append(room_temps[n])
-                daniels_room_time_list.append(time_list[n])
-                # print(room_temps[n])
-            elif name == "Nates Room":
-                host_names[n] = "Nate's Room"
-                list_points = list_points + 1
-                nates_room_temp_list.append(room_temps[n])
-                nates_room_time_list.append(time_list[n])
-                # print(room_temps[n])
-            elif name == "RaspiMain":
-                host_names[n] = "Server Rack"
-                list_points = list_points + 1
-                server_rack_temp_list.append(room_temps[n])
-                server_rack_time_list.append(time_list[n])
-                # print(room_temps[n])
-            else:
-                print("the hostname " + host_names[n] + " wasn't recognized")
 
 
         for n in range (0, server_temp_list_length):
@@ -280,41 +325,6 @@ while running is True:
                                   fill=0)  # 1st server temperature
 
 
-
-
-        list_a = server_closet_temp_list
-        list_b = living_room_temp_list
-        list_c = server_closet_time_list
-        list_d = living_room_time_list
-
-        if len(list_a) < len(list_b):
-            list_b = list_b[: len(list_a)]
-        elif len(list_a) > len(list_b):
-            list_a = list_a[: len(list_b)]
-        if len(list_c) < len(list_d):
-            list_d = list_d[: len(list_c)]
-        elif len(list_c) > len(list_d):
-            list_c = list_c[: len(list_d)]
-
-        server_closet_temp_list = list_a
-        living_room_temp_list = list_b
-        server_closet_time_list = list_c
-        living_room_time_list = list_d
-
-
-        print(len(server_closet_temp_list), len(living_room_temp_list))
-        print(len(server_closet_time_list), len(living_room_time_list))
-
-        plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
-        plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, linestyle='dashed',
-                 marker='.')
-
-        frame1 = plt.gca()
-        frame1.axes.get_xaxis().set_visible(False)
-        frame1.axes.get_yaxis().set_visible(False)
-
-        # function to show the plot
-        plt.savefig('closet_temps.png')
 
         server_closet_graph_image = Image.open('closet_temps.png')
         newsize = (600, 200)
