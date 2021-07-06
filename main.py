@@ -117,7 +117,7 @@ while running is True:
                 ubuntu_private_upload_speed = upload_speeds[n]
                 ubuntu_private_ping = pings[n]
             else:
-                print("the hostname " + host_names[n] + " wasn't recognized")
+                print("the hostname " + internet_speed_hostnames[n] + " wasn't recognized")
 
         message_display_text = last_message
 
@@ -158,7 +158,7 @@ while running is True:
             elif name == 'UbuntuSecure':
                 ubuntu_private_public_ip = public_ip_addresses[n]
             else:
-                print("the hostname " + host_names[n] + " wasn't recognized")
+                print("the hostname " + public_ip_host_names[n] + " wasn't recognized")
 
         draw_TextImage_Black.text((epd.height * .1, public_ip_height_offset), ubuntu_main_public_ip,
                                   font=medium_font, fill=0)  #
@@ -186,7 +186,7 @@ while running is True:
                 server_temp_host_names[n] = "Nate's Room"
                 # print(room_temps[n])
             else:
-                print("the hostname " + host_names[n] + " wasn't recognized")
+                print("the hostname " + server_temp_host_names[n] + " wasn't recognized")
 
 
         server_temp_list_length = len(server_temp_host_names)
@@ -231,7 +231,7 @@ while running is True:
                 server_rack_time_list.append(time_list[n])
                 # print(room_temps[n])
             else:
-                print("the hostname wasn't recognized")
+                print("the hostname " + host_names[n] + " wasn't recognized")
 
 
         for n in range (0, server_temp_list_length):
