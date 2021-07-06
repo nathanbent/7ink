@@ -73,22 +73,22 @@ living_room_24h = []
 server_closet_temps = []
 
 def convert_last_names():
-    global host_names
-    global room_temps
-    global time_list
-    for n, name in enumerate(host_names):  # Change names into what I want to call them
+    global last_host_names
+    global last_room_temps
+    global last_time_list
+    for n, name in enumerate(last_host_names):  # Change names into what I want to call them
         if name == 'RetroPie' or 'Living Room':
-            host_names[n] = 'Living Room'
+            last_host_names[n] = 'Living Room'
         elif name == 'RaspiTest' or 'Server Closet':
-            host_names[n] = 'Server Closet'
+            last_host_names[n] = 'Server Closet'
         elif name == 'RaspiZeroW' or "Daniel's Room":
-            host_names[n] = "Daniel's Room"
+            last_host_names[n] = "Daniel's Room"
         elif name == "Nates Room" or "Nate's Room":
-            host_names[n] = "Nate's Room"
+            last_host_names[n] = "Nate's Room"
         elif name == "RaspiMain" or 'Server Rack':
-            host_names[n] = "Server Rack"
+            last_host_names[n] = "Server Rack"
         else:
-            print("the hostname " + host_names[n] + " wasn't recognized")
+            print("the hostname " + last_ost_names[n] + " wasn't recognized")
 
 def influx_import():  # Import and break down the information from our influxDB
     # Lots of global variables to import, there should be a better way to do this
@@ -102,51 +102,45 @@ def influx_import():  # Import and break down the information from our influxDB
     global daniels_room_time_list
     global nates_room_temp_list
     global nates_room_time_list
-    global host_names
-    global room_temps
-    global time_list
+    global 24h_host_names
+    global 24h_room_temps
+    global 24h_time_list
 
-    host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
-    list_points = 0
+    24h_host_names, 24h_room_temps, 24h_time_list = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
         if name == 'RetroPie' or 'Living Room':
-            host_names[n] = 'Living Room'
-            list_points = list_points + 1
+            24h_host_names[n] = 'Living Room'
             # print(room_temps[n])
             if time_list[n] not in living_room_time_list:  # Only add to the list if not already there
                 living_room_temp_list.append(room_temps[n])
                 living_room_time_list.append(time_list[n])
         elif name == 'RaspiTest' or 'Server Closet':
-            host_names[n] = 'Server Closet'
+            24h_host_names[n] = 'Server Closet'
             if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
                 server_closet_temp_list.append(room_temps[n])
                 server_closet_time_list.append(time_list[n])
-            list_points = list_points + 1
             # print(room_temps[n])
         elif name == 'RaspiZeroW' or "Daniel's Room":
-            host_names[n] = "Daniel's Room"
-            list_points = list_points + 1
+            24h_host_names[n] = "Daniel's Room"
             if time_list[n] not in daniels_room_time_list:  # Only add to the list if not already there
                 daniels_room_temp_list.append(room_temps[n])
                 daniels_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "Nates Room" or "Nate's Room":
-            host_names[n] = "Nate's Room"
-            list_points = list_points + 1
+            24h_ost_names[n] = "Nate's Room"
             if time_list[n] not in nates_room_time_list:  # Only add to the list if not already there
                 nates_room_temp_list.append(room_temps[n])
                 nates_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "RaspiMain" or 'Server Rack':
-            host_names[n] = "Server Rack"
-            list_points = list_points + 1
+            24h_host_names[n] = "Server Rack"
             if time_list[n] not in server_rack_time_list:  # Only add to the list if not already there
                 server_rack_temp_list.append(room_temps[n])
                 server_rack_time_list.append(time_list[n])
             # print(room_temps[n])
         else:
-            print("the hostname " + host_names[n] + " wasn't recognized")
+            print("the hostname " + 24h_host_names[n] + " wasn't recognized")
 
 
 def plot_graph():
@@ -219,7 +213,7 @@ while running is True:
                                   "Screen updated on " + date_text + " at " + str(now.strftime("%I:%M %p")),
                                   font=really_small_font, fill=0)  # Screen updated section
         # Influx internet info import
-        server_temp_host_names, room_temps, room_humidities = influx_rt.pull_last_influx()  # Pulls the most recent
+        last_host_names, last_room_temps, last_room_humidities = influx_rt.pull_last_influx()  # Pulls the most recent
         public_ip_host_names, public_ip_addresses = influx_rt.pull_last_public_ip()  # Pulls the IP info
         internet_speed_hostnames, download_speeds, upload_speeds, pings, internet_speed_update_time = influx_rt.pull_last_internet_speeds()
         for n, name in enumerate(internet_speed_hostnames):  # Change names into what I want to call them
@@ -290,17 +284,17 @@ while running is True:
         plot_graph()
 
         # Most recent influx Temperatures
-        server_temp_list_length = len(server_temp_host_names)
-        divider_distance = 1.0 / server_temp_list_length
+        last_list_length = len(last_host_names)
+        divider_distance = 1.0 / lastlist_length
         list_points = 0
         convert_last_names()
-        for n in range(0, server_temp_list_length):
+        for n in range(0, last_list_length):
             print(n)
-            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), server_temps_display_offset),
+            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), last_display_offset),
                                       server_temp_host_names[n],
                                       font=really_small_font, fill=0)  #
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
-                                      str(round((room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
+                                      str(round((last_room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
                                       fill=0)  # 1st server temperature
         # print(room_temps)
         # print(host_names)
