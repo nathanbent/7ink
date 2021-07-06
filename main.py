@@ -87,7 +87,7 @@ def influx_import():
     global nates_room_temp_list
     global nates_room_time_list
 
-    host_names, room_temps, time_list = pull_last_24h_influx()
+    host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()
     list_points = 0
 
 
@@ -277,7 +277,6 @@ while running is True:
         draw_TextImage_Black.line((0, 600, epd.width, 600), fill=0)  # Line below times
 
 
-        host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()
         list_points = 0
 
 
