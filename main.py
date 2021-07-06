@@ -71,6 +71,7 @@ public_ip_height_offset = 425
 internet_speed_offset = 450
 screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
+last_display_offset = 500
 
 living_room_24h = []
 server_closet_temps = []
