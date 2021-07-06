@@ -185,6 +185,9 @@ while running is True:
             elif name == "Nates Room":
                 server_temp_host_names[n] = "Nate's Room"
                 # print(room_temps[n])
+            elif name == "RaspiMain":
+                server_temp_host_names[n] = "Server Rack"
+                # print(room_temps[n])
             else:
                 print("the hostname " + server_temp_host_names[n] + " wasn't recognized")
 
@@ -249,14 +252,6 @@ while running is True:
 
         server_closet_max_temp = max(server_closet_temp_list)
         server_closet_min_temp = min(server_closet_temp_list)
-
-        living_list_length = enumerate(living_list)
-        # N = 1000 # Max events for graph (288 is number of 5 minute increments for 24h)
-        #
-        # server_closet_temp_list = server_closet_temp_list[-N:]
-        # server_closet_time_list = server_closet_time_list[-N:]
-        # living_room_temp_list = living_room_temp_list[-N:]
-        # living_room_time_list = living_room_time_list[-N:]
 
         draw_TextImage_Black.text(((epd.height * 0.0), min_max_display_offset),
                                   str(round(server_closet_max_temp, 2)) + Prefs.degree_sign + " F", font=medium_font,
