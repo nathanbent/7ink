@@ -131,7 +131,7 @@ def influx_import():  # Import and break down the information from our influxDB
                 daniels_room_time_list.append(time_list[n])
             # print(room_temps[n])
         elif name == "Nates Room" or "Nate's Room":
-            24h_ost_names[n] = "Nate's Room"
+            host_names_24h[n] = "Nate's Room"
             if time_list[n] not in nates_room_time_list:  # Only add to the list if not already there
                 nates_room_temp_list.append(room_temps[n])
                 nates_room_time_list.append(time_list[n])
