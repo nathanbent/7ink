@@ -295,7 +295,7 @@ while running is True:
         for n in range(0, last_list_length):
             print(n)
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), last_display_offset),
-                                      server_temp_host_names[n],
+                                      last_host_names[n],
                                       font=really_small_font, fill=0)  #
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
                                       str(round((last_room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
