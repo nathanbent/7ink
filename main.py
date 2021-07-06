@@ -110,35 +110,35 @@ def influx_import():  # Import and break down the information from our influxDB
     list_points = 0
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
-        if name == 'RetroPie':
+        if name == 'RetroPie' or 'Living Room':
             host_names[n] = 'Living Room'
             list_points = list_points + 1
             # print(room_temps[n])
             if time_list[n] not in living_room_time_list:  # Only add to the list if not already there
                 living_room_temp_list.append(room_temps[n])
                 living_room_time_list.append(time_list[n])
-        elif name == 'RaspiTest':
+        elif name == 'RaspiTest' or 'Server Closet':
             host_names[n] = 'Server Closet'
             if time_list[n] not in server_closet_time_list:  # Only add to the list if not already there
                 server_closet_temp_list.append(room_temps[n])
                 server_closet_time_list.append(time_list[n])
             list_points = list_points + 1
             # print(room_temps[n])
-        elif name == 'RaspiZeroW':
+        elif name == 'RaspiZeroW' or "Daniel's Room":
             host_names[n] = "Daniel's Room"
             list_points = list_points + 1
             if time_list[n] not in daniels_room_time_list:  # Only add to the list if not already there
                 daniels_room_temp_list.append(room_temps[n])
                 daniels_room_time_list.append(time_list[n])
             # print(room_temps[n])
-        elif name == "Nates Room":
+        elif name == "Nates Room" or "Nate's Room":
             host_names[n] = "Nate's Room"
             list_points = list_points + 1
             if time_list[n] not in nates_room_time_list:  # Only add to the list if not already there
                 nates_room_temp_list.append(room_temps[n])
                 nates_room_time_list.append(time_list[n])
             # print(room_temps[n])
-        elif name == "RaspiMain":
+        elif name == "RaspiMain" or 'Server Rack':
             host_names[n] = "Server Rack"
             list_points = list_points + 1
             if time_list[n] not in server_rack_time_list:  # Only add to the list if not already there
