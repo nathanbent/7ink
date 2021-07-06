@@ -231,7 +231,7 @@ while running is True:
                 server_rack_time_list.append(time_list[n])
                 # print(room_temps[n])
             else:
-                print("the hostname " + host_names[n] + " wasn't recognized")
+                print("the hostname wasn't recognized")
 
 
         for n in range (0, server_temp_list_length):
