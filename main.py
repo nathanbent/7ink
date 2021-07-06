@@ -288,7 +288,7 @@ while running is True:
 
         # Most recent influx Temperatures
         last_list_length = len(last_host_names)
-        divider_distance = 1.0 / lastlist_length
+        divider_distance = 1.0 / last_list_length
         list_points = 0
         convert_last_names()
         for n in range(0, last_list_length):
