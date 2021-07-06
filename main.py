@@ -81,15 +81,15 @@ def convert_last_names():
     global last_room_temps
     global last_time_list
     for n, name in enumerate(last_host_names):  # Change names into what I want to call them
-        if name == 'RetroPie' or 'Living Room':
+        if name == 'RetroPie' or name == 'Living Room':
             last_host_names[n] = 'Living Room'
-        elif name == 'RaspiTest' or 'Server Closet':
+        elif name == 'RaspiTest' or name ==  'Server Closet':
             last_host_names[n] = 'Server Closet'
-        elif name == 'RaspiZeroW' or "Daniel's Room":
+        elif name == 'RaspiZeroW' or name ==  "Daniel's Room":
             last_host_names[n] = "Daniel's Room"
-        elif name == "Nates Room" or "Nate's Room":
+        elif name == "Nates Room" or name ==  "Nate's Room":
             last_host_names[n] = "Nate's Room"
-        elif name == "RaspiMain" or 'Server Rack':
+        elif name == "RaspiMain" or name ==  'Server Rack':
             last_host_names[n] = "Server Rack"
         else:
             print("the hostname " + last_ost_names[n] + " wasn't recognized")
