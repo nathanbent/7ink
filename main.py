@@ -22,7 +22,7 @@ import logging
 from prefs import Prefs
 import matplotlib.pyplot as plt
 
-sleep_time = 60
+sleep_time = 900
 
 host_names_24h = []
 room_temps_24h = []
