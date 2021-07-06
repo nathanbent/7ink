@@ -111,7 +111,7 @@ def influx_import():  # Import and break down the information from our influxDB
 
     host_names_24h, room_temps_24h, time_list_24h = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
 
-    for n, name in enumerate(host_names):  # Change names into what I want to call them
+    for n, name in enumerate(host_names_24h):  # Change names into what I want to call them
         if name == 'RetroPie' or 'Living Room':
             host_names_24h[n] = 'Living Room'
             # print(room_temps[n])
