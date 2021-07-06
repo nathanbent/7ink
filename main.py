@@ -28,12 +28,16 @@ sleep_time = 900
 time_list = []
 host_names = []
 room_temps = []
-living_list = []
-living_times_list = []
 living_room_temp_list = []
-living_room_time_list = []
 server_closet_temp_list = []
+living_room_time_list = []
 server_closet_time_list = []
+server_rack_temp_list = []
+server_rack_time_list = []
+daniels_room_temp_list = []
+daniels_room_time_list = []
+nates_room_temp_list = []
+nates_room_time_list = []
 
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
@@ -211,10 +215,20 @@ while running is True:
             elif name == 'RaspiZeroW':
                 host_names[n] = "Daniel's Room"
                 list_points = list_points + 1
+                daniels_room_temp_list.append(room_temps[n])
+                daniels_room_time_list.append(time_list[n])
                 # print(room_temps[n])
             elif name == "Nates Room":
                 host_names[n] = "Nate's Room"
                 list_points = list_points + 1
+                nates_room_temp_list.append(room_temps[n])
+                nates_room_time_list.append(time_list[n])
+                # print(room_temps[n])
+            elif name == "RaspiMain":
+                host_names[n] = "Server Rack"
+                list_points = list_points + 1
+                server_rack_temp_list.append(room_temps[n])
+                server_rack_time_list.append(time_list[n])
                 # print(room_temps[n])
             else:
                 print("the hostname " + host_names[n] + " wasn't recognized")
