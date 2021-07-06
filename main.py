@@ -178,6 +178,16 @@ def plot_graph():
 
 
 while running is True:
+    global living_room_temp_list
+    global server_closet_temp_list
+    global living_room_time_list
+    global server_closet_time_list
+    global server_rack_temp_list
+    global server_rack_time_list
+    global daniels_room_temp_list
+    global daniels_room_time_list
+    global nates_room_temp_list
+    global nates_room_time_list
     try:
         epd = epd7in5_HD.EPD()
         display_width = 528
@@ -304,14 +314,14 @@ while running is True:
 
         draw_TextImage_Black.text(((epd.height * 0.0), min_max_display_offset),
                                   str(round(server_closet_max_temp, 2)) + Prefs.degree_sign + " F", font=medium_font,
-                                  fill=0)  # 1st server temperature
+                                  fill=0)  # Server closet max temp
         draw_TextImage_Black.text(((epd.height * 0.0), min_max_display_offset + 25), "Server Closet Max",
-                                  font=really_small_font, fill=0)  #
+                                  font=really_small_font, fill=0)  # Server closet max temp
         draw_TextImage_Black.text(((epd.height * 0.25), min_max_display_offset),
                                   str(round(server_closet_min_temp, 2)) + Prefs.degree_sign + " F", font=medium_font,
-                                  fill=0)  # 1st server temperature
+                                  fill=0)  # Server closet min temp
         draw_TextImage_Black.text(((epd.height * 0.25), min_max_display_offset + 25), "Server Closet Min",
-                                  font=really_small_font, fill=0)  #
+                                  font=really_small_font, fill=0)  # Server closet min temp
 
         draw_TextImage_Black.text(((epd.height * 0.50), min_max_display_offset),
                                   str(round(living_room_max_temp, 2)) + Prefs.degree_sign + " F", font=medium_font,
@@ -330,26 +340,26 @@ while running is True:
 
 
 
-        server_closet_graph_image = Image.open('closet_temps.png')
-        newsize = (600, 200)
-        im1 = server_closet_graph_image.resize(newsize)
+        server_closet_graph_image = Image.open('closet_temps.png')  # Load the graph for display
+        newsize = (600, 200)  # Resize the graph to better fit the screen
+        im1 = server_closet_graph_image.resize(newsize)  # Resize to better fit
 
-        Black_Layer.paste(im1, Graph_offset)
+        Black_Layer.paste(im1, Graph_offset)  # Paste the graph on the screen at the graph offset
 
         # Black layer then red layer
         # Push to display
 
-        epd.init()
-        epd.Clear()
+        epd.init()  # Get screen ready
+        epd.Clear()  # Clear the screen
 
         epd.display(epd.getbuffer(Black_Layer))  # Push to display,
-        print("displayed")
+        print("displayed")  # Let us know it's displayed
 
-        time.sleep(sleep_time)
+        time.sleep(sleep_time)  # Sleep for desired time
 
-        logging.info("Clear...")
-        epd.init()
-        epd.Clear()
+        logging.info("Clear...")  # Log
+        epd.init()  # Get screen ready
+        epd.Clear()  # Clear screen
 
         logging.info("Goto Sleep...")
         epd.sleep()
