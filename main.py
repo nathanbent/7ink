@@ -24,6 +24,9 @@ import matplotlib.pyplot as plt
 
 sleep_time = 60
 
+24h_host_names
+24h_room_temps
+24h_time_list
 last_time_list = []
 last-host_names = []
 last_room_temps = []
