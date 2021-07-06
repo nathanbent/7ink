@@ -72,6 +72,23 @@ message_display_offset = (15, 100)
 living_room_24h = []
 server_closet_temps = []
 
+def convert_last_names():
+    global host_names
+    global room_temps
+    global time_list
+    for n, name in enumerate(host_names):  # Change names into what I want to call them
+        if name == 'RetroPie':
+            host_names[n] = 'Living Room'
+        elif name == 'RaspiTest':
+            host_names[n] = 'Server Closet'
+        elif name == 'RaspiZeroW':
+            host_names[n] = "Daniel's Room"
+        elif name == "Nates Room":
+            host_names[n] = "Nate's Room"
+        elif name == "RaspiMain":
+            host_names[n] = "Server Rack"
+        else:
+            print("the hostname " + host_names[n] + " wasn't recognized")
 
 def influx_import():  # Import and break down the information from our influxDB
     # Lots of global variables to import, there should be a better way to do this
@@ -191,6 +208,9 @@ while running is True:
         NoImageLayer = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         draw_TextImage_Black = ImageDraw.Draw(Black_Layer)  # White box
         draw_TextImage_Red = ImageDraw.Draw(Red_Layer)  # White box
+        # Lines!!
+        draw_TextImage_Black.line((0, 20, epd.width, 20), fill=0)  # Line below times
+        draw_TextImage_Black.line((0, 600, epd.width, 600), fill=0)  # Line below times
         # Time text
         now = datetime.now()  # Load the current time to show on display
         date_text = now.strftime("%A, %B, %d")  # The date text
@@ -269,18 +289,15 @@ while running is True:
         influx_import()
         plot_graph()
 
+        # Most recent influx Temperatures
         server_temp_list_length = len(server_temp_host_names)
         divider_distance = 1.0 / server_temp_list_length
-        # Lines!!
-        draw_TextImage_Black.line((0, 20, epd.width, 20), fill=0)  # Line below times
-        draw_TextImage_Black.line((0, 600, epd.width, 600), fill=0)  # Line below times
-
         list_points = 0
-
+        convert_last_names()
         for n in range(0, server_temp_list_length):
             print(n)
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), server_temps_display_offset),
-                                      host_names[n],
+                                      server_temp_host_names[n],
                                       font=really_small_font, fill=0)  #
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
                                       str(round((room_temps[n]), 1)) + Prefs.degree_sign + " F", font=medium_font,
