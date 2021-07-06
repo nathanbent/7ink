@@ -87,6 +87,9 @@ def influx_import():
         global daniels_room_time_list
         global nates_room_temp_list
         global nates_room_time_list
+        global host_names
+        global room_temps
+        global time_list
 
         host_names, room_temps, time_list = pull_last_24h_influx()
         list_points = 0
@@ -178,16 +181,7 @@ def plot_graph():
 
 
 while running is True:
-    global living_room_temp_list
-    global server_closet_temp_list
-    global living_room_time_list
-    global server_closet_time_list
-    global server_rack_temp_list
-    global server_rack_time_list
-    global daniels_room_temp_list
-    global daniels_room_time_list
-    global nates_room_temp_list
-    global nates_room_time_list
+
     try:
         epd = epd7in5_HD.EPD()
         display_width = 528
