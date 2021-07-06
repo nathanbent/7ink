@@ -76,54 +76,59 @@ server_closet_temps = []
 
 
 def influx_import():
-    global living_room_temp_list
-    global server_closet_temp_list
-    global living_room_time_list
-    global server_closet_time_list
-    global server_rack_temp_list
-    global server_rack_time_list
-    global daniels_room_temp_list
-    global daniels_room_time_list
-    global nates_room_temp_list
-    global nates_room_time_list
+    def influx_import():
+        global living_room_temp_list
+        global server_closet_temp_list
+        global living_room_time_list
+        global server_closet_time_list
+        global server_rack_temp_list
+        global server_rack_time_list
+        global daniels_room_temp_list
+        global daniels_room_time_list
+        global nates_room_temp_list
+        global nates_room_time_list
 
-    host_names, room_temps, time_list = influx_rt.pull_last_24h_influx()
-    list_points = 0
+        host_names, room_temps, time_list = pull_last_24h_influx()
+        list_points = 0
 
-
-    for n, name in enumerate(host_names):  # Change names into what I want to call them
-        if name == 'RetroPie':
-            host_names[n] = 'Living Room'
-            list_points = list_points + 1
-            # print(room_temps[n])
-            living_room_temp_list.append(room_temps[n])
-            living_room_time_list.append(time_list[n])
-        elif name == 'RaspiTest':
-            host_names[n] = 'Server Closet'
-            server_closet_temp_list.append(room_temps[n])
-            server_closet_time_list.append(time_list[n])
-            list_points = list_points + 1
-            # print(room_temps[n])
-        elif name == 'RaspiZeroW':
-            host_names[n] = "Daniel's Room"
-            list_points = list_points + 1
-            daniels_room_temp_list.append(room_temps[n])
-            daniels_room_time_list.append(time_list[n])
-            # print(room_temps[n])
-        elif name == "Nates Room":
-            host_names[n] = "Nate's Room"
-            list_points = list_points + 1
-            nates_room_temp_list.append(room_temps[n])
-            nates_room_time_list.append(time_list[n])
-            # print(room_temps[n])
-        elif name == "RaspiMain":
-            host_names[n] = "Server Rack"
-            list_points = list_points + 1
-            server_rack_temp_list.append(room_temps[n])
-            server_rack_time_list.append(time_list[n])
-            # print(room_temps[n])
-        else:
-            print("the hostname " + host_names[n] + " wasn't recognized")
+        for n, name in enumerate(host_names):  # Change names into what I want to call them
+            if name == 'RetroPie':
+                host_names[n] = 'Living Room'
+                list_points = list_points + 1
+                # print(room_temps[n])
+                if time_list[n] not in living_room_time_list:
+                    living_room_temp_list.append(room_temps[n])
+                    living_room_time_list.append(time_list[n])
+            elif name == 'RaspiTest':
+                host_names[n] = 'Server Closet'
+                if time_list[n] not in server_closet_time_list:
+                    server_closet_temp_list.append(room_temps[n])
+                    server_closet_time_list.append(time_list[n])
+                list_points = list_points + 1
+                # print(room_temps[n])
+            elif name == 'RaspiZeroW':
+                host_names[n] = "Daniel's Room"
+                list_points = list_points + 1
+                if time_list[n] not in daniels_room_time_list:
+                    daniels_room_temp_list.append(room_temps[n])
+                    daniels_room_time_list.append(time_list[n])
+                # print(room_temps[n])
+            elif name == "Nates Room":
+                host_names[n] = "Nate's Room"
+                list_points = list_points + 1
+                if time_list[n] not in nates_room_time_list:
+                    nates_room_temp_list.append(room_temps[n])
+                    nates_room_time_list.append(time_list[n])
+                # print(room_temps[n])
+            elif name == "RaspiMain":
+                host_names[n] = "Server Rack"
+                list_points = list_points + 1
+                if time_list[n] not in server_closet_time_list:
+                    server_rack_temp_list.append(room_temps[n])
+                    server_rack_time_list.append(time_list[n])
+                # print(room_temps[n])
+            else:
+                print("the hostname " + host_names[n] + " wasn't recognized")
 
 def plot_graph():
     global living_room_temp_list
