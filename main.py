@@ -72,6 +72,7 @@ internet_speed_offset = 450
 screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
 last_display_offset = 500
+last_display_offset2 = last_display_offset + 100
 
 living_room_24h = []
 server_closet_temps = []

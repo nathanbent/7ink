@@ -29,7 +29,7 @@ class Prefs:
     clear_spot = 50  # How many loops in-between clearing
     inky_clean_cycles_2_clean = 3  # How many times the inky clean will cycle before its done, 3 is OEM
     running = True  # Main running loop
-    display_time = 60  # How long to display images
+    display_time = 445  # How long to display images
     weather_works = 0
 
     current_program_status = 0  # Sets program to not running
