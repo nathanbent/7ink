@@ -26,7 +26,7 @@ sleep_time = 60
 
 host_names_24h = []
 room_temps_24h = []
-time_list-24h = []
+time_list_24h = []
 last_time_list = []
 last-host_names = []
 last_room_temps = []
@@ -107,9 +107,9 @@ def influx_import():  # Import and break down the information from our influxDB
     global nates_room_time_list
     global host_names_24h
     global room_temps_24h
-    global time_list-24h
+    global time_list_24h
 
-    host_names_24h, room_temps_24h, time_list-24h = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
+    host_names_24h, room_temps_24h, time_list_24h = influx_rt.pull_last_24h_influx()  # Pull data from the influx db
 
     for n, name in enumerate(host_names):  # Change names into what I want to call them
         if name == 'RetroPie' or 'Living Room':
