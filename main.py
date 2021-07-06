@@ -23,7 +23,7 @@ import logging
 from prefs import Prefs
 import matplotlib.pyplot as plt
 
-sleep_time = 900
+sleep_time = 60
 
 time_list = []
 host_names = []
