@@ -238,7 +238,7 @@ while running is True:
 
         draw_TextImage_Black.text((50, last_display_offset),
                                   str(message_display_text), font=Prefs.small_font, fill=0)
-        draw_TextImage_Black.text((50, last_display_offset2 + (0, 100)),
+        draw_TextImage_Black.text((50, last_display_offset2),
                                   str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)
 
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset), str(ubuntu_main_download_speed),
