@@ -71,7 +71,7 @@ public_ip_height_offset = 425
 internet_speed_offset = 450
 screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
-last_display_offset = 500
+last_display_offset = 200
 last_display_offset2 = last_display_offset + 100
 
 living_room_24h = []
@@ -236,9 +236,9 @@ while running is True:
         last_message, message_time, message_host = influx_rt.pull_last_message()  # Import the last message and info
         message_display_text = last_message
 
-        draw_TextImage_Black.text((message_display_offset),
+        draw_TextImage_Black.text((last_display_offset),
                                   str(message_display_text), font=Prefs.small_font, fill=0)
-        draw_TextImage_Black.text((message_display_offset + (0, 100)),
+        draw_TextImage_Black.text((last_display_offset2 + (0, 100)),
                                   str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)
 
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset), str(ubuntu_main_download_speed),
