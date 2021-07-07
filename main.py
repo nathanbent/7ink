@@ -73,6 +73,7 @@ screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
 last_display_offset = 200
 last_display_offset2 = last_display_offset + 100
+last_temps_display_offset = 500
 
 living_room_24h = []
 server_closet_temps = []
@@ -295,7 +296,7 @@ while running is True:
         convert_last_names()
         for n in range(0, last_list_length):
             print(n)
-            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), last_display_offset),
+            draw_TextImage_Black.text(((epd.height * (n * divider_distance)), last_temps_display_offset),
                                       last_host_names[n],
                                       font=really_small_font, fill=0)  #
             draw_TextImage_Black.text(((epd.height * (n * divider_distance)), (server_temps_display_offset - 30)),
