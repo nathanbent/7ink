@@ -161,6 +161,17 @@ def plot_graph():
     global nates_room_temp_list
     global nates_room_time_list
 
+    living_room_temp_list = []
+    server_closet_temp_list = []
+    living_room_time_list = []
+    server_closet_time_list = []
+    server_rack_temp_list = []
+    server_rack_time_list = []
+    daniels_room_temp_list = []
+    daniels_room_time_list = []
+    nates_room_temp_list = []
+    nates_room_time_list = []
+
     list_a = server_closet_temp_list  # Make the lists the same length
     list_b = living_room_temp_list  # Make the lists the same length
     list_c = server_closet_time_list  # Make the lists the same length
