@@ -149,6 +149,29 @@ def influx_import():  # Import and break down the information from our influxDB
             print("the hostname " + host_names_24h[n] + " wasn't recognized")
 
 
+def clean_tables():
+    global living_room_temp_list
+    global server_closet_temp_list
+    global living_room_time_list
+    global server_closet_time_list
+    global server_rack_temp_list
+    global server_rack_time_list
+    global daniels_room_temp_list
+    global daniels_room_time_list
+    global nates_room_temp_list
+    global nates_room_time_list
+    living_room_temp_list = []
+    server_closet_temp_list = []
+    living_room_time_list = []
+    server_closet_time_list = []
+    server_rack_temp_list = []
+    server_rack_time_list = []
+    daniels_room_temp_list = []
+    daniels_room_time_list = []
+    nates_room_temp_list = []
+    nates_room_time_list = []
+
+
 def plot_graph():
     global living_room_temp_list
     global server_closet_temp_list
@@ -160,17 +183,6 @@ def plot_graph():
     global daniels_room_time_list
     global nates_room_temp_list
     global nates_room_time_list
-
-    living_room_temp_list = []
-    server_closet_temp_list = []
-    living_room_time_list = []
-    server_closet_time_list = []
-    server_rack_temp_list = []
-    server_rack_time_list = []
-    daniels_room_temp_list = []
-    daniels_room_time_list = []
-    nates_room_temp_list = []
-    nates_room_time_list = []
 
     list_a = server_closet_temp_list  # Make the lists the same length
     list_b = living_room_temp_list  # Make the lists the same length
@@ -362,6 +374,7 @@ while running is True:
 
         epd.display(epd.getbuffer(Black_Layer))  # Push to display,
         print("displayed")  # Let us know it's displayed
+        clean_tables()
 
         time.sleep(sleep_time)  # Sleep for desired time
 
