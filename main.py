@@ -188,7 +188,7 @@ def plot_graph():
 
     server_closet_temp_list = list_a  # Make the lists the same length
     living_room_temp_list = list_b  # Make the lists the same length
-    server_closet_time_list = list_c  # Make the lists the same length
+    server_closet_time_list = list_c  # Make the lists t he same length
     living_room_time_list = list_d  # Make the lists the same length
 
     print(len(server_closet_temp_list), len(living_room_temp_list))  # Show us the list lengths
