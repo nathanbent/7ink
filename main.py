@@ -82,7 +82,7 @@ server_closet_temps = []
 # Instantiate repo object
 repo = git.Repo("/home/pi/Scripts/7ink")
 # pull down
-repo.remotes.origin.pull()
+repo.remotes.upstream.pull('master')
 
 def convert_last_names():
     global last_host_names
@@ -196,6 +196,7 @@ def plot_graph():
     list_d = living_room_time_list  # Make the lists the same length
 
     plt.clf()  # Clear the graph to keep it clean
+    print("DOES THIS PRINT?")
 
     if len(list_a) < len(list_b):  # Compare length of lists
         list_b = list_b[: len(list_a)]  # Compare length of lists
