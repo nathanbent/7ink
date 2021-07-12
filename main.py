@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 import influx_rt
 import os.path
 import logging
+import git
 
 from prefs import Prefs
 import matplotlib.pyplot as plt
@@ -77,6 +78,11 @@ last_temps_display_offset = 500
 
 living_room_24h = []
 server_closet_temps = []
+
+# Instantiate repo object
+repo = git.Repo("/home/pi/Scripts/7ink")
+# pull down
+repo.remotes.origin.pull()
 
 def convert_last_names():
     global last_host_names
