@@ -195,6 +195,8 @@ def plot_graph():
     list_c = server_closet_time_list  # Make the lists the same length
     list_d = living_room_time_list  # Make the lists the same length
 
+    plt.clf()  # Clear the graph to keep it clean
+
     if len(list_a) < len(list_b):  # Compare length of lists
         list_b = list_b[: len(list_a)]  # Compare length of lists
     elif len(list_a) > len(list_b):  # Compare length of lists
