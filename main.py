@@ -82,7 +82,7 @@ server_closet_temps = []
 # Instantiate repo object
 repo = git.Repo("/home/pi/Scripts/7ink")
 # pull down
-repo.remotes.upstream.pull('master')
+repo.remotes.upstream.pull('main')
 
 def convert_last_names():
     global last_host_names
