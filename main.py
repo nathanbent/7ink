@@ -18,7 +18,6 @@ from datetime import datetime, timedelta
 import influx_rt
 import os.path
 import logging
-import git
 
 from prefs import Prefs
 import matplotlib.pyplot as plt
