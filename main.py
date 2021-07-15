@@ -73,7 +73,7 @@ screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
 last_display_offset = 200
 last_display_offset2 = last_display_offset + 100
-last_temps_display_offset = 500
+last_temps_display_offset = 530  # For the list of current sensor temps
 
 living_room_24h = []
 server_closet_temps = []
@@ -266,11 +266,14 @@ while running is True:
         last_message, message_time, message_host = influx_rt.pull_last_message()  # Import the last message and info
         message_display_text = last_message
 
-        draw_TextImage_Black.text((50, last_display_offset),
-                                  str(message_display_text), font=Prefs.small_font, fill=0)
         draw_TextImage_Black.text((50, last_display_offset2),
-                                  str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)
+                                  str(message_display_text), font=Prefs.small_font, fill=0)  # Message content
+        draw_TextImage_Black.text((50, last_display_offset),
+                                  str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)  # Message metadata
+# End message section
 
+
+# Internet speed section
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset), str(ubuntu_main_download_speed),
                                   font=small_font, fill=0)  #
         draw_TextImage_Black.text((epd.height * .1, internet_speed_offset + 15), "Download",
@@ -295,7 +298,8 @@ while running is True:
                                   font=small_font, fill=0)  #
         draw_TextImage_Black.text((epd.height * .90, internet_speed_offset + 15), "ping",
                                   font=really_small_font, fill=0)  #
-
+        # End internet speed section
+        # Begin IP address section
         for n, name in enumerate(public_ip_host_names):  # Change names into what I want to call them
             if name == 'UbuntuMain':
                 ubuntu_main_public_ip = public_ip_addresses[n]
@@ -315,8 +319,10 @@ while running is True:
         draw_TextImage_Black.text((epd.height * .6, public_ip_height_offset - 30), "Ubuntu Secure",
                                   font=medium_font, fill=0)  #
 
-        influx_import()
-        plot_graph()
+        # End IP address section
+
+        influx_import()  # Import influxdb stuff for the plot
+        plot_graph()  # Plot the graph
 
         # Most recent influx Temperatures
         last_list_length = len(last_host_names)
