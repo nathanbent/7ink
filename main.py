@@ -73,7 +73,7 @@ screen_update_text_location = (0, 0)
 message_display_offset = (15, 100)
 last_display_offset = 200
 last_display_offset2 = last_display_offset + 100
-last_temps_display_offset = 530  # For the list of current sensor temps
+last_temps_display_offset = 550  # For the list of current sensor temps
 
 living_room_24h = []
 server_closet_temps = []
@@ -266,10 +266,10 @@ while running is True:
         last_message, message_time, message_host = influx_rt.pull_last_message()  # Import the last message and info
         message_display_text = last_message
 
-        draw_TextImage_Black.text((50, last_display_offset2),
-                                  str(message_display_text), font=Prefs.small_font, fill=0)  # Message content
-        draw_TextImage_Black.text((50, last_display_offset),
-                                  str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)  # Message metadata
+        # draw_TextImage_Black.text((50, last_display_offset2),
+        #                           str(message_display_text), font=Prefs.small_font, fill=0)  # Message content
+        # draw_TextImage_Black.text((50, last_display_offset),
+        #                           str(" from " + message_host + " at " + message_time), font=Prefs.small_font, fill=0)  # Message metadata
 # End message section
 
 
