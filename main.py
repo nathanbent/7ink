@@ -188,30 +188,34 @@ def plot_graph():
     global nates_room_temp_list
     global nates_room_time_list
 
-    list_a = server_closet_temp_list  # Make the lists the same length
-    list_b = living_room_temp_list  # Make the lists the same length
-    list_c = server_closet_time_list  # Make the lists the same length
-    list_d = living_room_time_list  # Make the lists the same length
+
+    data_point_1_list = server_closet_temp_list
+    data_point_2_list = living_room_temp_list
+    time_list = server_closet_time_list
+
+
+    list_a = data_point_1_list  # Make the lists the same length
+    list_b = data_point_2_list  # Make the lists the same length
+    list_c = time_list  # Make the lists the same length
 
     plt.clf()  # Clear the graph to keep it clean
     print("DOES THIS PRINT?")
 
     if len(list_a) < len(list_b):  # Compare length of lists
         list_b = list_b[: len(list_a)]  # Compare length of lists
+        print("did A")
     elif len(list_a) > len(list_b):  # Compare length of lists
         list_a = list_a[: len(list_b)]  # Compare length of lists
-    if len(list_c) < len(list_d):  # Compare length of lists
-        list_d = list_d[: len(list_c)]  # Compare length of lists
-    elif len(list_c) > len(list_d):  # Compare length of lists
-        list_c = list_c[: len(list_d)]  # Compare length of lists
+        list_c = list_c[: len(list_b)]  # Change time list
+        print("did B")
 
-    server_closet_temp_list = list_a  # Make the lists the same length
-    living_room_temp_list = list_b  # Make the lists the same length
-    server_closet_time_list = list_c  # Make the lists t he same length
-    living_room_time_list = list_d  # Make the lists the same length
 
-    print(len(server_closet_temp_list), len(living_room_temp_list))  # Show us the list lengths
-    print(len(server_closet_time_list), len(living_room_time_list))  # Show us the list lengths
+    data_point_1_list = list_a  # Make the lists the same length
+    data_point_2_list = list_b  # Make the lists the same length
+    time_list = list_c  # Make the lists t he same length
+
+    print(len(data_point_1_list), len(time_list))  # Show us the list lengths
+    print(len(data_point_2_list), len(time_list))  # Show us the list lengths
 
     plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
     plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, label='Living Room')
