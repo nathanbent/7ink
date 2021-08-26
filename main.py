@@ -217,8 +217,8 @@ def plot_graph():
     print(len(data_point_1_list), len(time_list))  # Show us the list lengths
     print(len(data_point_2_list), len(time_list))  # Show us the list lengths
 
-    plt.plot(server_closet_time_list, server_closet_temp_list, color='black', linewidth=1, label='_nolegend_')
-    plt.plot(server_closet_time_list, living_room_temp_list, color='black', linewidth=1, label='Living Room')
+    plt.plot(time_list, data_point_1_list, color='black', linewidth=1, label='_nolegend_')
+    plt.plot(time_list, data_point_2_list, color='black', linewidth=1, label='Living Room')
 
     frame1 = plt.gca()
     frame1.axes.get_xaxis().set_visible(False)
